@@ -25,6 +25,7 @@ test('@Web Client App login', async ({ page }) => {
     ]
 
     const actualProducts = await cardsName.allTextContents()
+    console.log(await cardsName.nth(0).textContent())
     const message = `Expected products: ${JSON.stringify(expectedProducts)}, Actual products: ${JSON.stringify(actualProducts)}`
     console.log(message)
     assert.deepStrictEqual(actualProducts, expectedProducts, message)
