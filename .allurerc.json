@@ -1,0 +1,16 @@
+{
+  "allure": {
+    "reportPath": "allure-report"
+  },
+  "plugins": [],
+  "categories": [
+    {
+      "name": "Test Defects",
+      "matchedStatuses": ["failed"]
+    },
+    {
+      "name": "Warnings",
+      "matchedStatuses": ["skipped"]
+    }
+  ]
+}

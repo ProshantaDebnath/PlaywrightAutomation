@@ -11,11 +11,13 @@ const config = ({
   expect: {
     timeout: 40 * 1000
   },
-  reporter: 'html',
+  reporter: [
+    ['allure-playwright'],
+    ['html']
+  ],
   use: {
     browserName: 'chromium',
     headless: false,
-    viewport: null
   },
 
 });

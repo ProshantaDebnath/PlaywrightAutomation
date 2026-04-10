@@ -1,8 +1,15 @@
 const { test, expect } = require('@playwright/test')
+const { allure } = require('allure-playwright');
+const { attachFailureScreenshot, attachScreenshot } = require('./helpers/allureHelper');
+
+// Attach failure screenshots automatically for all tests in this file
+test.afterEach(async ({ page }, testInfo) => {
+  await attachFailureScreenshot(page, testInfo);
+});
 
 test.only('@Register and Login', async ({ page }) => {
-
-    const Email = "tesstsg@gmail.com"
+    await allure.description('Test user login with valid email and password');
+    const Email = "tesstsg12@gmail.com"
     const Password = "testing242512@!F"
     const registerBtn = page.locator('a[href*="register"]')
     const firstName = page.locator("#firstName")
@@ -40,6 +47,9 @@ test.only('@Register and Login', async ({ page }) => {
     await userPassword.fill(Password)
     await login.click()
     await expect(navBar).toContainText("Automation")
+    
+    // Attach screenshot after successful login
+    await attachScreenshot(page, 'successful-login');
 
     const expectedProducts = [
         'ADIDAS ORIGINAL',
@@ -47,7 +57,7 @@ test.only('@Register and Login', async ({ page }) => {
         'iphone 13 pro'
     ]
 
-    await page.waitForTimeout(5000)
+    await page.waitForLoadState("networkidle")
     const actualProducts = await cardsName.allTextContents()
     console.log(await cardsName.nth(0).textContent())
     const message = `Expected products: ${JSON.stringify(expectedProducts)}, Actual products: ${JSON.stringify(actualProducts)}`
