@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test')
 const { allure } = require('allure-playwright');
+const properties = require('../properties')
 const { attachFailureScreenshot, attachScreenshot } = require('./helpers/allureHelper');
 
 // Attach failure screenshots automatically for all tests in this file
@@ -7,7 +8,7 @@ test.afterEach(async ({ page }, testInfo) => {
   await attachFailureScreenshot(page, testInfo);
 });
 
-test.only('@Register and Login', async ({ page }) => {
+test('@Register and Login', async ({ page }) => {
     await allure.description('Test user login with valid email and password');
     const Email = "tesstsg12@gmail.com"
     const Password = "testing242512@!F"
@@ -26,7 +27,7 @@ test.only('@Register and Login', async ({ page }) => {
     const navBar = page.locator('text="Automation Practice"');
     const cardsName = page.locator('.card-body b')
 
-    await page.goto("https://rahulshettyacademy.com/client");
+    await page.goto(properties.URL1);
 
     //User Registration Form
     await registerBtn.click()

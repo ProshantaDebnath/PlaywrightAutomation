@@ -1,10 +1,11 @@
 const assert = require('assert')
 const { test, expect } = require('@playwright/test')
+const properties = require('../properties')
 
 
 test('@Web Client App login', async ({ page }) => {
 
-    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    await page.goto(properties.URL2);
 
     const userName = page.locator("#username")
     const password = page.locator("#password")
@@ -29,10 +30,6 @@ test('@Web Client App login', async ({ page }) => {
     const message = `Expected products: ${JSON.stringify(expectedProducts)}, Actual products: ${JSON.stringify(actualProducts)}`
     console.log(message)
     assert.deepStrictEqual(actualProducts, expectedProducts, message)
-
-
-
-
 
 
 

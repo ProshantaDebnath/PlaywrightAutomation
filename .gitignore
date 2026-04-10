@@ -7,6 +7,9 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 
+# Config files with sensitive data
+properties.js
+
 # Allure Reports
 /allure-results/
 /allure-report/
