@@ -36,23 +36,25 @@ test('@E2E Flow of Ecommerce', async ({ page }) => {
         }
     }
 
-    //Navigative to Cart Page
+    //Navigative to Cart Page and add the payment details in the cart
     await cartBtn.click()
     await page.locator('div li').first().waitFor()
+    //Parameterize Locater
     const addedItemBool = await page.locator(`h3:has-text("${productName}")`).isVisible();
     expect(addedItemBool).toBeTruthy()
 
+    //Selecting Auto Suggestive Dropdown
     await page.locator('text=Checkout').click()
-    await page.locator('[placeholder="Select Country"]').pressSequentially("Ind",{delay:100})
-    const dropdown =  page.locator(".ta-results")
+    await page.locator('[placeholder="Select Country"]').pressSequentially("Ind", { delay: 100 })
+    const dropdown = page.locator(".ta-results")
     const hiddentext = page.locator('.user__name label[type="text"]')
     await dropdown.waitFor()
-
+  
     const optionsCount = await dropdown.locator("button").count()
 
-    for(let i=0; i<optionsCount; i++){
+    for (let i = 0; i < optionsCount; i++) {
         const text = await dropdown.locator("button").nth(i).textContent()
-        if(text.trim() === "India"){
+        if (text.trim() === "India") {
             await dropdown.locator("button").nth(i).click()
             break
         }
@@ -70,6 +72,26 @@ test('@E2E Flow of Ecommerce', async ({ page }) => {
 
     await page.locator(".action__submit").click()
 
+
+    //order done & validating the order
     await expect(page.locator('.hero-primary')).toContainText(' Thankyou for the order. ')
+
+    const orderId = await page.locator(".em-spacer-1 .ng-star-inserted").textContent()
+
+    await page.locator("button[routerlink*='myorders']").click()
+    await page.locator("tbody").waitFor()
+    const rows = page.locator("tbody tr")
+
+    for (let i = 0; i < await rows.count(); ++i) {
+        const rowOrderId = await rows.nth(i).locator("th").textContent();
+        if (orderId.includes(rowOrderId)) {
+            await rows.nth(i).locator("button").first().click();
+            break;
+        }
+    }
+    const orderIdDetails = await page.locator(".col-text").textContent();
+    expect(orderId.includes(orderIdDetails)).toBeTruthy();
+
+
 
 })
