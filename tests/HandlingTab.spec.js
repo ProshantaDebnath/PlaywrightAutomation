@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test')
 const properties = require('../properties')
 
-test.only('@Handling Tab', async ({ browser }) => {
+test('@Handling Tab', async ({ browser }) => {
 
     const context = await browser.newContext()
     const page = await context.newPage()

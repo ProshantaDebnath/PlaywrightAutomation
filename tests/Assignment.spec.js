@@ -10,7 +10,7 @@ test.afterEach(async ({ page }, testInfo) => {
 
 test('@Register and Login', async ({ page }) => {
     await allure.description('Test user login with valid email and password');
-    const Email = "tesstsg12@gmail.com"
+    const Email = "playwright45@gmail.com"
     const Password = "testing242512@!F"
     const registerBtn = page.locator('a[href*="register"]')
     const firstName = page.locator("#firstName")
@@ -31,8 +31,8 @@ test('@Register and Login', async ({ page }) => {
 
     //User Registration Form
     await registerBtn.click()
-    await firstName.fill("TestUI")
-    await lastName.fill("Test")
+    await firstName.fill("Playwritght")
+    await lastName.fill("Testing")
     await userEmail.fill(Email)
     await userMobile.fill('1234567890')
     await occupation.selectOption('Engineer')

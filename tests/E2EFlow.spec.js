@@ -1,0 +1,75 @@
+const { test, expect } = require('@playwright/test')
+const properties = require('../properties')
+
+
+test('@E2E Flow of Ecommerce', async ({ page }) => {
+
+    const productName = 'ZARA COAT 3'
+    const products = page.locator('.card-body')
+    const userEmail = page.locator('#userEmail')
+    const userPassword = page.locator('#userPassword')
+    const login = page.locator('#login')
+    const navBar = page.locator('//p[text()="Automation Practice"]');
+    const productList = page.locator('.card-body b')
+
+    const cartBtn = page.locator('[routerlink*="cart"]')
+
+    await page.goto(properties.URL1)
+
+    await userEmail.fill(properties.tempMail)
+    await userPassword.fill(properties.tempPass)
+    await login.click()
+
+    await expect(navBar).toContainText("Automation")
+
+    //dynamic wait
+    await productList.first().waitFor()
+    const productTitles = await productList.allTextContents()
+    console.log('ProductTitles------->' + productTitles)
+
+    const Count = await products.count()
+    //Iterating all the prouct and select the right product to cart
+    for (let i = 0; i < Count; i++) {
+        if (await products.nth(i).locator('b').textContent() === productName) {
+            await products.nth(i).locator('button:has-text("Add To Cart")').click()
+            break
+        }
+    }
+
+    //Navigative to Cart Page
+    await cartBtn.click()
+    await page.locator('div li').first().waitFor()
+    const addedItemBool = await page.locator(`h3:has-text("${productName}")`).isVisible();
+    expect(addedItemBool).toBeTruthy()
+
+    await page.locator('text=Checkout').click()
+    await page.locator('[placeholder="Select Country"]').pressSequentially("Ind",{delay:100})
+    const dropdown =  page.locator(".ta-results")
+    const hiddentext = page.locator('.user__name label[type="text"]')
+    await dropdown.waitFor()
+
+    const optionsCount = await dropdown.locator("button").count()
+
+    for(let i=0; i<optionsCount; i++){
+        const text = await dropdown.locator("button").nth(i).textContent()
+        if(text.trim() === "India"){
+            await dropdown.locator("button").nth(i).click()
+            break
+        }
+    }
+
+    expect(hiddentext).toHaveText(properties.tempMail)
+
+    await page.locator("//*[contains(text(),'CVV Code')]//..//input").fill(properties.paymentDetails.cvv)
+
+    await page.locator("//*[contains(text(),'Name on Card')]//..//input").fill(properties.paymentDetails.nameOnCard)
+
+    await page.locator("//*[contains(text(),'Apply Coupon ')]//..//input").fill(properties.paymentDetails.couponCode)
+
+    await page.getByRole('button', { name: 'Apply Coupon' }).click()
+
+    await page.locator(".action__submit").click()
+
+    await expect(page.locator('.hero-primary')).toContainText(' Thankyou for the order. ')
+
+})
