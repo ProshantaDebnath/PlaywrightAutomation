@@ -21,6 +21,8 @@ test('@E2E Flow of Ecommerce', async ({ page }) => {
     await login.click()
 
     await expect(navBar).toContainText("Automation")
+    // Attach screenshot after successful login
+    await attachScreenshot(page, 'successful-login')
 
     //dynamic wait
     await productList.first().waitFor()

@@ -2,6 +2,7 @@ const { test, expect } = require('@playwright/test')
 const { allure } = require('allure-playwright');
 const properties = require('../properties')
 const { attachFailureScreenshot, attachScreenshot } = require('./helpers/allureHelper');
+const { generateRandomEmail } = require('./helpers/emailHelper');
 
 // Attach failure screenshots automatically for all tests in this file
 test.afterEach(async ({ page }, testInfo) => {
@@ -10,7 +11,7 @@ test.afterEach(async ({ page }, testInfo) => {
 
 test('@Register and Login', async ({ page }) => {
     await allure.description('Test user login with valid email and password');
-    const Email = "playwright45@gmail.com"
+    const Email = generateRandomEmail();
     const Password = "testing242512@!F"
     const registerBtn = page.locator('a[href*="register"]')
     const firstName = page.locator("#firstName")

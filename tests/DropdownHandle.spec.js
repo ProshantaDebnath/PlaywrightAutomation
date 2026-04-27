@@ -1,6 +1,11 @@
 const { test, expect } = require('@playwright/test')
 const properties = require('../properties')
 
+// Attach failure screenshots automatically for all tests in this file
+test.afterEach(async ({ page }, testInfo) => {
+  await attachFailureScreenshot(page, testInfo);
+});
+
 test('@UI Control', async ({ page }) => {
 
     const userName = page.locator('#username')
