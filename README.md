@@ -1,4 +1,4 @@
-"# Playwright E2E Automation Framework
+## Playwright E2E Automation Framework
 
 A comprehensive end-to-end testing automation framework built with **Playwright** and **Allure Reporting**. This project automates the testing of web applications with advanced reporting capabilities, screenshot attachments on failure, and detailed test analytics.
 
@@ -134,26 +134,6 @@ allure --version
 
 ---
 
-## ⚙️ Configuration
-
-### Playwright Config (`playwright.config.js`)
-
-```javascript
-{
-  testDir: './tests',              // Test directory
-  timeout: 40 * 1000,             // Test timeout (40 seconds)
-  expect: { timeout: 40 * 1000 }, // Assertion timeout
-  reporter: [
-    ['allure-playwright'],         // Allure reporter
-    ['html']                       // HTML reporter
-  ],
-  use: {
-    browserName: 'chromium',       // Browser type
-    headless: false                // Run in headed mode
-  }
-}
-```
-
 ## 🧪 Running Tests
 
 ### Basic Test Execution
@@ -182,6 +162,14 @@ npx playwright test UIBasic.spec.js
 # Run tests matching pattern
 npx playwright test --grep "@Register"
 npx playwright test --grep "@Web Client"
+```
+
+### Run with Debug & UI & Codegen
+```bash
+# Run tests Debug & UI & Codegen
+npx playwright test --ui
+npx playwright test Assignment.spec.js --debug
+npx playwright codegen <URL>
 ```
 
 ---
@@ -320,38 +308,6 @@ Helper methods available:
 
 ---
 
-## 📝 Test Files Overview
-
-### 1. **Assignment.spec.js**
-E2E test for complete registration and login workflow
-- ✅ Navigate to application
-- ✅ Complete user registration form
-- ✅ Login with registered credentials
-- ✅ Verify dashboard and products
-
-**Test Credentials:**
-- Email: `tesstsg12@gmail.com`
-- Password: `testing242512@!F`
-- URL: `https://rahulshettyacademy.com/client`
-
-**Expected Products:** ADIDAS ORIGINAL, ZARA COAT 3, iphone 13 pro
-
-### 2. **UIBasic.spec.js**
-Test for web client app login and product verification
-- ✅ Navigate to practice app
-- ✅ Enter credentials
-- ✅ Verify successful login
-- ✅ Validate product list
-
-**Test Credentials:**
-- Username: `rahulshettyacademy`
-- Password: `Learning@830$3mK2`
-- URL: `https://rahulshettyacademy.com/loginpagePractise/`
-
-**Expected Products:** iphone X, Samsung Note 8, Nokia Edge, Blackberry
-
----
-
 ## 🔧 Troubleshooting
 
 ### Issue: Tests not running
@@ -419,20 +375,7 @@ npm test -- --reporter=list
 
 ---
 
-## 📄 License
-
-ISC
-
----
-
 ## 👤 Author
 
-QA Automation Team
+Proshanta Debnath
 
----
-
-## 📞 Support
-
-For issues or questions, please open a GitHub issue or contact the QA team.
-
-**Last Updated:** April 2026" 

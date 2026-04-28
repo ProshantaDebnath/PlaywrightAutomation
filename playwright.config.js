@@ -1,5 +1,6 @@
 // @ts-check
 const { devices } = require('@playwright/test');
+const { trace } = require('node:console');
 
 
 /**
@@ -19,6 +20,8 @@ const config = ({
     browserName: 'chromium',
     headless: false,
     viewport: null,
+    screenshot: 'on',
+    trace: 'on',
     launchOptions: {
       args: ['--start-maximized']
     }
